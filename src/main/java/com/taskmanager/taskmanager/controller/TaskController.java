@@ -8,6 +8,7 @@ import com.taskmanager.taskmanager.service.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,23 +18,16 @@ import java.util.List;
 @RequestMapping("/api/tasks")
 public class TaskController {
     @Autowired
-//    private TaskService taskService;
+
     private TaskService taskService;
 
-//    @PostMapping
-//    public com.taskmanager.taskmanager.entity.Task createTask(@RequestBody Task task) {
-//        return taskService.createTask(task);
-//    }
 
     @PostMapping
-//    public Task createTask(@RequestBody Task task){
-//        return taskService.createTask(task);
-//    }
 
 
     public ResponseEntity<Task> createTask(@RequestBody Task task) {
         Task createdTask = taskService.createTask(task);
-        return ResponseEntity.ok(createdTask);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdTask);
     }
 
     @GetMapping
@@ -55,9 +49,10 @@ public class TaskController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
-        taskService.deleteTask(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> deleteTask(@PathVariable Long id) {
+        String s = taskService.deleteTask(id);
+
+        return ResponseEntity.ok(s);
     }
 
 

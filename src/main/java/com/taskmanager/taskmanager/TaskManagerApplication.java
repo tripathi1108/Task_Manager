@@ -8,7 +8,7 @@ public class TaskManagerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(TaskManagerApplication.class, args);
-		System.out.println("Hello Ji This is my Page");
+		System.out.println("This is Task Manager Application");
 	}
 
 }

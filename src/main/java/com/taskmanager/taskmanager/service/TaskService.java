@@ -15,7 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 
 
 
@@ -26,14 +26,10 @@ public class TaskService {
     private TaskRepository taskRepository;
     @Autowired
     private UserRepository userRepository;
-//
-//    public Task createTask(Task task) {
-//        return taskRepository.save(task);
-//    }
 
 
     public Task createTask(Task task) {
-        // Fetch the user by userId
+        // Fetch the user from the database using the userId
         User user = userRepository.findById(task.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + task.getUserId()));
 
@@ -43,6 +39,7 @@ public class TaskService {
         // Save the task
         return taskRepository.save(task);
     }
+
 
     public List<Task> getAllTasks() {
         return taskRepository.findAll();
@@ -61,10 +58,11 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
-    public void deleteTask(Long taskId) {
+    public String deleteTask(Long taskId) {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new TaskNotFoundException("Task not found with id: " + taskId));
         taskRepository.deleteById(taskId);
+        return "Task Deleted Successfully";
     }
 
 
